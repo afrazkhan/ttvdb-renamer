@@ -2,7 +2,7 @@
 
 """
 Renames files based on series name and episode names found in thetvdb.com.
-Makes pattern matching easy by using a delimeter and name position, rather than
+Makes pattern matching easy by using a delimiter and name position, rather than
 a regular expression.
 
 Requires an API key located in ~/.config/ttvdb/api_key, which you can get for
@@ -84,15 +84,15 @@ def get_file_list():
 
 @click.command(no_args_is_help=True)
 @click.argument('series')
-@click.option('--delimeter', '-d', default='.', help="¡Work in Progress! Which character separates series info in the filename?")
-@click.option('--name-position', '-n', default=1, help="How many delimeters are there before the name?")
+@click.option('--delimiter', '-d', default='.', help="¡Work in Progress! Which character separates series info in the filename?")
+@click.option('--name-position', '-n', default=1, help="How many delimiters are there before the name?")
 @click.option('--batch', '-b', is_flag=True, default=False, help="Perform renames without asking for approval")
-def scan(series, delimeter, name_position, batch):
+def scan(series, delimiter, name_position, batch):
     """
     Scan the current directory against thetvdb.com. The series name must be
     given, even if it appears in the filenames.
 
-    --delimeter and --name-position can be used to tune where the episode name
+    --delimiter and --name-position can be used to tune where the episode name
     can be found in the filenames. The defaults of '.' and '1' respectively
     will work for files named so:
 
@@ -109,8 +109,9 @@ def scan(series, delimeter, name_position, batch):
     file_list = get_file_list()
 
     for this_file in file_list:
+        filename = os.path.splitext(this_file)[0]
         # This is a bit nasty, but we need to ignore things like 'Mr. '
-        episode_name = re.split(f"\{delimeter}(?!\s)", this_file)[name_position]
+        episode_name = re.split(f"\{delimiter}(?!\s)", filename)[name_position]
 
         found = find_episode(episode_name, episodes)
         if found:

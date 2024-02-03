@@ -33,20 +33,18 @@ resulting in them being renamed:
 [series-name-or-anything].S[season-number]E[episode-number].extension
 ```
 
-Note that the option to change the delimeter with `-d` does not work yet, which means your filenames must be deliminated with `.`.
-
-If the position of the episode name is after the first delimeter, you can specify it with `-n`. So for example, given the name:
+If the delimiter is not '.', you can specify it with `-d`. If the position of the episode name is not after the first delimiter, you can specify how many delimiters precede it with `-n`. So for example, given the name:
 
 ```sh
-[series-name].[something-else].[episode-name].extension
+[series-name]-[something-else]-[episode-name].extension
 ```
 
 you would pass these options:
 
 ```sh
-thetvdb-renamer.py 'Disney Animated Shorts' -n 2
+thetvdb-renamer.py 'Disney Animated Shorts' -d '-' -n 2
 ```
 
 You can also use the `-b` flag to avoid asking for confirmation on each rename.
 
-Please be warned that _this script renames files_, and I have only done very limited testing for my own use case.
+Please be warned that _this script renames files_, and I have only done very limited manual testing for my own use case.
